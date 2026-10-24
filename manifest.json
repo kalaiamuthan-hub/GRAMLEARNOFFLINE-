@@ -1,0 +1,29 @@
+{
+  "name": "GramLearn AI – Offline AI Tutor",
+  "short_name": "GramLearn AI",
+  "description": "Mobile-first, offline-capable AI tutoring web app powered by in-browser WebLLM and local storage",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAF6F0",
+  "theme_color": "#784E2D",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

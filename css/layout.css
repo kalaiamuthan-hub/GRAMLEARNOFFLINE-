@@ -1,0 +1,417 @@
+/* GramLearn AI - Dashboard Layout & Responsive Shell */
+
+/* App Wrapper: Desktop has sidebar, Mobile has top header & bottom nav */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  background-color: var(--bg-body);
+}
+
+/* ==========================================================================
+   Desktop Sidebar
+   ========================================================================== */
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  transition: transform var(--trans-normal);
+  box-shadow: var(--shadow-sm);
+}
+
+.sidebar-brand {
+  padding: 1.5rem 1.25rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.brand-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--grad-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+
+.brand-icon-wrapper svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.brand-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.brand-title span {
+  color: var(--primary-600);
+}
+
+.brand-subtitle {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+/* Sidebar Navigation */
+.sidebar-nav {
+  padding: 1rem 0.75rem;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.nav-section-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-disabled);
+  padding: 0.6rem 0.75rem 0.3rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: all var(--trans-fast);
+  position: relative;
+  border: 1px solid transparent;
+}
+
+.nav-item:hover {
+  background-color: var(--primary-50);
+  color: var(--primary-700);
+  transform: translateX(2px);
+}
+
+.nav-item.active {
+  background: var(--primary-100);
+  color: var(--primary-700);
+  font-weight: 700;
+  border-color: rgba(120, 78, 45, 0.25);
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: -0.75rem;
+  top: 25%;
+  height: 50%;
+  width: 4px;
+  background: var(--primary-600);
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+}
+
+.nav-item svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--trans-fast);
+}
+
+.nav-item:hover svg {
+  transform: scale(1.08);
+}
+
+.nav-badge {
+  margin-left: auto;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+  background: var(--primary-200);
+  color: var(--primary-800);
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  padding: 1rem;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: var(--bg-subtle);
+}
+
+.status-card-compact {
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-xs);
+}
+
+.status-indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-emerald);
+  position: relative;
+}
+
+.status-indicator-dot.offline {
+  background: var(--accent-amber);
+}
+
+.status-indicator-dot.pulse::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0.5;
+  animation: pulseGlow 2s infinite;
+}
+
+/* ==========================================================================
+   Mobile Header & Navigation Bar
+   ========================================================================== */
+.mobile-header {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--mobile-header-height);
+  background: var(--bg-surface-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-light);
+  z-index: 60;
+  padding: 0 1rem;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-xs);
+}
+
+.mobile-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.mobile-brand-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  background: var(--grad-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-brand-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: #ffffff;
+  stroke-width: 2;
+}
+
+.mobile-brand-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.mobile-brand-title span {
+  color: var(--primary-600);
+}
+
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--bottom-nav-height);
+  background: var(--bg-surface-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border-light);
+  z-index: 60;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 0.5rem;
+  box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.05);
+}
+
+.bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: all var(--trans-fast);
+  min-width: 58px;
+}
+
+.bottom-nav-item svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--trans-fast);
+}
+
+.bottom-nav-item.active {
+  color: var(--primary-600);
+}
+
+.bottom-nav-item.active svg {
+  transform: translateY(-2px);
+  stroke-width: 2.3;
+}
+
+/* ==========================================================================
+   Main Content Area
+   ========================================================================== */
+.main-wrapper {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-body);
+  transition: margin var(--trans-normal);
+}
+
+.content-container {
+  flex: 1;
+  padding: 2rem;
+  max-width: var(--max-content-width);
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* View Sections */
+.app-view {
+  display: none;
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+.app-view.active {
+  display: block;
+}
+
+/* View Header */
+.view-header {
+  margin-bottom: 1.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.view-header-content h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.view-header-content p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.view-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 240px;
+  }
+  .content-container {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+  .mobile-header {
+    display: flex;
+  }
+  .mobile-bottom-nav {
+    display: flex;
+  }
+  .main-wrapper {
+    margin-left: 0;
+    padding-top: var(--mobile-header-height);
+    padding-bottom: var(--bottom-nav-height);
+  }
+  .content-container {
+    padding: 1rem;
+  }
+  .view-header {
+    margin-bottom: 1.25rem;
+  }
+  .view-header-content h1 {
+    font-size: 1.4rem;
+  }
+}

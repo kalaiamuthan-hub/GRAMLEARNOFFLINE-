@@ -1,0 +1,53 @@
+# GramLearn AI - Git Ignore Configuration
+
+# Dependencies (Installed via npm for local dev)
+node_modules/
+
+# Development scratch scripts & local tests
+scratch/
+
+# Environment variables & secrets (Never commit secrets)
+.env
+.env.local
+.env.*.local
+*.env
+
+# Operating System files
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+
+# Editor & IDE directories
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# Logs & debugging
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Large ML / AI model weights & checkpoints
+# Note: WebLLM downloads model weights dynamically to browser CacheStorage.
+# Model weights must NOT be stored in git repository due to GitHub size limits.
+*.bin
+*.safetensors
+*.gguf
+*.onnx
+*.tar.gz
+*.zip
+*.7z
+models/
+weights/
+
+# Build outputs & deployment artifacts
+.vercel/
+dist/
+build/
+.cache/

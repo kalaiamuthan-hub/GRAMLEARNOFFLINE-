@@ -1,0 +1,2267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#784E2D">
+  <meta name="description"
+    content="GramLearn AI - Your friendly neighbourhood offline AI tutor & companion. Learn Science, Maths, History, General Knowledge, and English completely offline.">
+  <title>GramLearn AI – Friendly Neighbourhood AI Tutor</title>
+
+  <!-- PWA Manifest & Favicon -->
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+  <link rel="icon" type="image/png" href="./icons/favicon.png">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./css/variables.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/layout.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/chat.css">
+</head>
+
+<body>
+  <!-- ======================================================================
+       GramLearn AI: Smooth Entrance & Student Auth Portal (Login & Register)
+       ====================================================================== -->
+  <div id="entrance-portal" class="entrance-portal-overlay">
+    <div class="entrance-backdrop-glow"></div>
+    <div class="entrance-backdrop-glow glow-2"></div>
+
+    <div class="entrance-portal-container">
+      <!-- Portal Brand Hero Header -->
+      <div class="entrance-brand-header">
+        <div class="entrance-badge-pill">
+          <span class="entrance-pulse-dot"></span>
+          <span>🌱 100% Offline AI School Companion • தமிழ்நாடு பள்ளி கல்வி</span>
+        </div>
+
+        <div class="entrance-logo-row">
+          <div class="entrance-logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span class="entrance-ai-sparkle">✨</span>
+          </div>
+          <div class="entrance-logo-text">
+            <h1 class="entrance-app-title">GramLearn <span>AI</span></h1>
+            <p class="entrance-tamil-tagline">கிராமப்புற மாணவர்களுக்கான பிரத்யேக AI வழிகாட்டி</p>
+          </div>
+        </div>
+
+        <p class="entrance-hero-desc">
+          Learn Science, Maths, Social Science & English with your friendly offline AI tutor.
+          Specially crafted for <strong>Tamil Nadu Samacheer Kalvi (Classes 6–12)</strong>. Zero Internet needed!
+        </p>
+
+        <!-- 4 Key Highlights -->
+        <div class="entrance-highlights-grid">
+          <div class="entrance-highlight-item">
+            <span class="entrance-highlight-icon">⚡</span>
+            <div>
+              <strong>100% Offline</strong>
+              <span>No Internet Needed</span>
+            </div>
+          </div>
+          <div class="entrance-highlight-item">
+            <span class="entrance-highlight-icon">📖</span>
+            <div>
+              <strong>TN Samacheer</strong>
+              <span>Classes 6 to 12</span>
+            </div>
+          </div>
+          <div class="entrance-highlight-item">
+            <span class="entrance-highlight-icon">📸</span>
+            <div>
+              <strong>Camera OCR</strong>
+              <span>Photo Q&A Solver</span>
+            </div>
+          </div>
+          <div class="entrance-highlight-item">
+            <span class="entrance-highlight-icon">🤖</span>
+            <div>
+              <strong>Bilingual Tutor</strong>
+              <span>எளிய தமிழ் & English</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portal Auth Card -->
+      <div class="entrance-auth-card">
+        <!-- Auth Tabs: Login vs Register -->
+        <div class="auth-tabs entrance-auth-tabs">
+          <button id="entrance-tab-btn-login" class="auth-tab-btn active" type="button" onclick="window.gramApp.switchEntranceTab('login')">
+            🔑 உள்நுழைவு (Student Login)
+          </button>
+          <button id="entrance-tab-btn-register" class="auth-tab-btn" type="button" onclick="window.gramApp.switchEntranceTab('register')">
+            ✨ புதிய பதிவு (Register)
+          </button>
+        </div>
+
+        <!-- Tab 1: Clean Username + Password Login -->
+        <div id="entrance-form-login" class="entrance-form-tab">
+          <div class="form-group">
+            <label class="form-label" for="entrance-login-username" style="font-weight: 700;">
+              Username / மாணவர் பெயர்: <span style="color: var(--accent-rose);">*</span>
+            </label>
+            <input type="text" id="entrance-login-username" class="input-text" placeholder="e.g. priya or your registered name" autocomplete="username" required
+              onkeydown="if(event.key==='Enter') document.getElementById('entrance-login-password').focus()" />
+          </div>
+
+          <div class="form-group" style="margin-top: 0.85rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label class="form-label" for="entrance-login-password" style="font-weight: 700;">
+                Password / கடவுச்சொல்: <span style="color: var(--accent-rose);">*</span>
+              </label>
+            </div>
+            <div class="password-input-wrapper">
+              <input type="password" id="entrance-login-password" class="input-text" placeholder="Enter your password (default: 123)" autocomplete="current-password" required
+                onkeydown="if(event.key==='Enter') window.gramApp.handleEntranceLogin()" />
+              <button type="button" class="btn-toggle-pass" onclick="window.gramApp.togglePasswordVisibility('entrance-login-password', this)" title="Show / Hide Password">
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <div class="entrance-demo-cred-hint">
+            <span>💡 Default Student Login:</span>
+            <code>priya</code> / <code>123</code> or <code>karthik</code> / <code>123</code>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.65rem; margin-top: 1.25rem;">
+            <button type="button" class="btn btn-primary entrance-submit-btn" onclick="window.gramApp.handleEntranceLogin()">
+              🚀 Login to Classroom (உள்நுழைக)
+            </button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.25rem;">
+              <button type="button" class="btn btn-ghost btn-sm" style="color: var(--text-muted); font-size: 0.82rem;" onclick="window.gramApp.switchEntranceTab('register')">
+                ✨ New Student? Sign Up
+              </button>
+              <button type="button" class="btn btn-ghost btn-sm" style="color: var(--text-muted); font-size: 0.82rem;" onclick="window.gramApp.handleEntranceGuest()">
+                🌟 Guest Mode
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: New Student Registration with Password -->
+        <div id="entrance-form-register" class="entrance-form-tab hidden">
+          <div class="form-group">
+            <label class="form-label" style="font-weight: 700;">Choose Your Avatar:</label>
+            <div class="avatar-grid entrance-avatar-grid" id="entrance-avatar-grid">
+              <button type="button" class="avatar-choice-btn selected" data-avatar="👩‍🎓">👩‍🎓</button>
+              <button type="button" class="avatar-choice-btn" data-avatar="🧑‍🎓">🧑‍🎓</button>
+              <button type="button" class="avatar-choice-btn" data-avatar="👨‍🎓">👨‍🎓</button>
+              <button type="button" class="avatar-choice-btn" data-avatar="👩‍🔬">👩‍🔬</button>
+              <button type="button" class="avatar-choice-btn" data-avatar="🌟">🌟</button>
+              <button type="button" class="avatar-choice-btn" data-avatar="🚀">🚀</button>
+              <button type="button" class="avatar-choice-btn" data-avatar="📚">📚</button>
+              <button type="button" class="avatar-choice-btn" data-avatar="💡">💡</button>
+              <button type="button" class="avatar-choice-btn" data-avatar="🦉">🦉</button>
+              <button type="button" class="avatar-choice-btn" data-avatar="🎯">🎯</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="entrance-reg-name" style="font-weight: 700;">
+              Student Name / மாணவர் பெயர்: <span style="color: var(--accent-rose);">*</span>
+            </label>
+            <input type="text" id="entrance-reg-name" class="input-text" placeholder="e.g. Priya, Anitha, Murugan..." required />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+            <div class="form-group">
+              <label class="form-label" for="entrance-reg-grade" style="font-weight: 700;">Class / வகுப்பு:</label>
+              <select id="entrance-reg-grade" class="select-input">
+                <option value="Class 6">Class 6 (6-ஆம் வகுப்பு)</option>
+                <option value="Class 7">Class 7 (7-ஆம் வகுப்பு)</option>
+                <option value="Class 8">Class 8 (8-ஆம் வகுப்பு)</option>
+                <option value="Class 9">Class 9 (9-ஆம் வகுப்பு)</option>
+                <option value="Class 10" selected>Class 10 (10-ஆம் வகுப்பு SSLC)</option>
+                <option value="Class 11">Class 11 (11-ஆம் வகுப்பு)</option>
+                <option value="Class 12">Class 12 (12-ஆம் வகுப்பு HSC)</option>
+                <option value="College">College / Degree</option>
+                <option value="General Learner">General Learner</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="entrance-reg-lang" style="font-weight: 700;">Medium:</label>
+              <select id="entrance-reg-lang" class="select-input">
+                <option value="Tamil & English" selected>Tanglish (தமிழ் & English)</option>
+                <option value="Tamil Only">தமிழ் வழி (Tamil Only)</option>
+                <option value="English Only">English Medium</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 0.5rem;">
+            <div class="form-group">
+              <label class="form-label" for="entrance-reg-password" style="font-weight: 700;">
+                Create Password: <span style="color: var(--accent-rose);">*</span>
+              </label>
+              <div class="password-input-wrapper">
+                <input type="password" id="entrance-reg-password" class="input-text" placeholder="Min 3 chars" required />
+                <button type="button" class="btn-toggle-pass" onclick="window.gramApp.togglePasswordVisibility('entrance-reg-password', this)">👁️</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="entrance-reg-confirm-password" style="font-weight: 700;">
+                Confirm Password: <span style="color: var(--accent-rose);">*</span>
+              </label>
+              <div class="password-input-wrapper">
+                <input type="password" id="entrance-reg-confirm-password" class="input-text" placeholder="Re-enter password" required
+                  onkeydown="if(event.key==='Enter') window.gramApp.handleEntranceRegister()" />
+                <button type="button" class="btn-toggle-pass" onclick="window.gramApp.togglePasswordVisibility('entrance-reg-confirm-password', this)">👁️</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.25rem;">
+            <button type="button" class="btn btn-primary entrance-submit-btn" onclick="window.gramApp.handleEntranceRegister()">
+              🎉 Register & Start Learning (பதிவு செய்)
+            </button>
+            <div style="text-align: center; margin-top: 0.65rem;">
+              <button type="button" class="btn btn-ghost btn-sm" style="color: var(--text-muted); font-size: 0.82rem;" onclick="window.gramApp.switchEntranceTab('login')">
+                Already registered? Login here
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Entrance Loading Transition Overlay -->
+        <div id="entrance-transition-loader" class="entrance-transition-loader hidden">
+          <div class="entrance-loader-spinner"></div>
+          <h3 id="entrance-loader-greeting" class="entrance-loader-title">வணக்கம்!</h3>
+          <p id="entrance-loader-sub" class="entrance-loader-sub">Preparing your offline classroom & AI tutor...</p>
+          <div class="progress-container" style="width: 240px; margin-top: 1rem; height: 6px;">
+            <div class="progress-fill" style="width: 100%; animation: pulseProgress 1s infinite alternate;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-container">
+
+    <!-- ======================================================================
+         Desktop Sidebar
+         ====================================================================== -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon-wrapper">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <div class="brand-title">GramLearn <span>AI</span></div>
+          <div class="brand-subtitle">Friendly Neighbourhood AI</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Navigation</div>
+        <a href="#dashboard" class="nav-item active" data-view="dashboard">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+          </svg>
+          Dashboard
+        </a>
+        <a href="#quiz" class="nav-item" data-view="quiz">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          Quizzes & Tests
+          <span class="nav-badge" style="background: var(--accent-emerald-light); color: var(--accent-emerald);">Classes
+            6–10</span>
+        </a>
+        <a href="#chat" class="nav-item" data-view="chat">
+          <svg viewBox="0 0 24 24">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          Friendly AI Chat
+          <span class="nav-badge">SmolLM2 360M</span>
+        </a>
+        <a href="#ocr" class="nav-item" data-view="ocr">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+          Textbook OCR Scanner
+          <span class="nav-badge" style="background: var(--primary-100); color: var(--primary-800);">Tesseract.js</span>
+        </a>
+        <a href="#gaps" class="nav-item" data-view="gaps">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 14 14"></polyline>
+          </svg>
+          Learning Gaps
+        </a>
+        <a href="#notes" class="nav-item" data-view="notes">
+          <svg viewBox="0 0 24 24">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+          Saved Notes
+        </a>
+
+        <div class="nav-section-title" style="margin-top: 0.75rem;">System & Engine</div>
+        <a href="#settings" class="nav-item" data-view="settings">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+            </path>
+          </svg>
+          Model & Settings
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <!-- Student Profile & Switch Login -->
+        <div class="student-profile-widget" onclick="window.gramApp.openStudentLoginModal()"
+          style="cursor: pointer; margin-bottom: 0.65rem;" title="Click to Switch or Login Student">
+          <div class="student-avatar" id="sidebar-student-avatar">👩‍🎓</div>
+          <div class="student-details">
+            <div class="student-name-text" id="sidebar-student-name">Priya</div>
+            <span class="student-grade-badge" id="sidebar-student-grade">Class 10</span>
+          </div>
+          <button class="btn btn-icon-sm btn-ghost" title="Switch Student / Login"
+            onclick="event.stopPropagation(); window.gramApp.openStudentLoginModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" y1="12" x2="3" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="sidebar-status-box">
+          <div class="sidebar-status-left">
+            <div class="sidebar-status-badge">
+              <span class="status-indicator-dot"></span>
+              <span class="network-status-text">Offline Mode</span>
+            </div>
+            <div class="sidebar-status-sub">All features available</div>
+          </div>
+          <div class="sidebar-status-icon">📶</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ======================================================================
+         Mobile Header
+         ====================================================================== -->
+    <header class="mobile-header">
+      <div class="mobile-brand">
+        <div class="mobile-brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+        </div>
+        <div class="mobile-brand-title">GramLearn <span>AI</span></div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <span class="badge badge-sky" id="dash-offline-status-pill" style="font-size: 0.72rem;">
+          <span class="status-indicator-dot"></span> Online
+        </span>
+        <button class="btn btn-sm btn-outline" style="padding: 0.25rem 0.55rem; font-size: 0.75rem;"
+          onclick="window.gramApp.openStudentLoginModal()">
+          <span id="mobile-student-avatar" style="margin-right: 0.25rem;">👩‍🎓</span> Login
+        </button>
+      </div>
+    </header>
+
+    <!-- ======================================================================
+         Mobile Bottom Navigation
+         ====================================================================== -->
+    <nav class="mobile-bottom-nav">
+      <button class="bottom-nav-item active" data-view="dashboard">
+        <svg viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+          <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+          <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+          <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+        </svg>
+        <span>Dashboard</span>
+      </button>
+      <button class="bottom-nav-item" data-view="quiz">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        <span>Quizzes</span>
+      </button>
+      <button class="bottom-nav-item" data-view="chat">
+        <svg viewBox="0 0 24 24">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>AI Chat</span>
+      </button>
+      <button class="bottom-nav-item" data-view="ocr">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+          <circle cx="12" cy="13" r="4"></circle>
+        </svg>
+        <span>OCR Scan</span>
+      </button>
+      <button class="bottom-nav-item" data-view="notes">
+        <svg viewBox="0 0 24 24">
+          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+          <polyline points="17 21 17 13 7 13 7 21"></polyline>
+          <polyline points="7 3 7 8 15 8"></polyline>
+        </svg>
+        <span>Notes</span>
+      </button>
+    </nav>
+
+    <!-- ======================================================================
+         Main Content Area & Views
+         ====================================================================== -->
+    <main class="main-wrapper">
+      <div class="content-container">
+
+        <!-- ================= VIEW 1: STUDENT PROGRESS DASHBOARD ================= -->
+        <section id="view-dashboard" class="app-view active">
+          <!-- Top Bar: Greeting, Streak & Identity -->
+          <div class="view-top-bar">
+            <div class="view-heading-group">
+              <h1 class="view-main-title">
+                Good Morning, <span id="dash-welcome-name">Student</span>! 👋
+                <span id="dash-welcome-grade"
+                  style="font-size: 1.05rem; color: var(--primary-600); font-weight: 600;"></span>
+              </h1>
+              <p class="view-sub-title">Your offline learning progress & assessment tracker</p>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
+              <!-- Real Streak Pill -->
+              <div id="dash-streak-pill" class="dash-streak-pill"
+                title="Consecutive days of active study & quiz attempts">
+                <span>🔥</span> <span id="dash-streak-count">0</span> Days Streak
+              </div>
+
+              <!-- Student Profile Pill -->
+              <button class="header-student-pill" onclick="window.gramApp.openStudentLoginModal()"
+                title="Switch or Manage Student Profile">
+                <span class="pill-avatar" id="header-student-avatar">👩‍🎓</span>
+                <span class="pill-name" id="header-student-name">Student</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  style="width: 14px; height: 14px;">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+
+              <!-- Clear Progress Option -->
+              <button class="btn btn-sm btn-ghost" onclick="window.gramApp.openClearProgressModal()"
+                title="Reset progress records for active student"
+                style="font-size: 0.76rem; color: var(--accent-rose); border: 1px solid rgba(190, 18, 60, 0.2);">
+                🗑️ Clear Progress
+              </button>
+            </div>
+          </div>
+
+          <!-- Hero Action Cards Grid (4 Essential Actions) -->
+          <div class="dash-hero-grid"
+            style="grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); margin-bottom: 1.75rem;">
+            <!-- Action 1: Interactive Quizzes -->
+            <div class="dash-hero-card" style="border-left: 4px solid var(--accent-emerald);">
+              <div>
+                <div class="dash-hero-icon-box"
+                  style="background: var(--accent-emerald-light); color: var(--accent-emerald);">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                  </svg>
+                </div>
+                <div class="dash-hero-title">Take Quiz</div>
+                <div class="dash-hero-desc">Practice Tamil Nadu 6th–10th Maths & Science MCQs with instant explanations.
+                </div>
+              </div>
+              <button class="btn btn-primary dash-hero-btn" onclick="window.gramApp.navigateTo('quiz')">
+                Start Quiz
+              </button>
+            </div>
+
+            <!-- Action 2: OCR Scan -->
+            <div class="dash-hero-card">
+              <div>
+                <div class="dash-hero-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                  </svg>
+                </div>
+                <div class="dash-hero-title">Scan & Ask</div>
+                <div class="dash-hero-desc">Snap or upload a textbook question to solve offline.</div>
+              </div>
+              <button class="btn btn-primary dash-hero-btn" onclick="window.gramApp.navigateTo('ocr')">
+                Open OCR
+              </button>
+            </div>
+
+            <!-- Action 3: AI Chat Tutor -->
+            <div class="dash-hero-card">
+              <div>
+                <div class="dash-hero-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                </div>
+                <div class="dash-hero-title">AI Tutor Chat</div>
+                <div class="dash-hero-desc">Ask doubts in Tamil & English with SmolLM2-360M.</div>
+              </div>
+              <button class="btn btn-primary dash-hero-btn" onclick="window.gramApp.navigateTo('chat')">
+                Open Chat
+              </button>
+            </div>
+
+            <!-- Action 4: Syllabus Explorer -->
+            <div class="dash-hero-card">
+              <div>
+                <div class="dash-hero-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                  </svg>
+                </div>
+                <div class="dash-hero-title">TN Syllabus</div>
+                <div class="dash-hero-desc">Explore state board chapters, formulas & study notes.</div>
+              </div>
+              <button class="btn btn-primary dash-hero-btn" onclick="window.gramApp.openSyllabusModal()">
+                View Syllabus
+              </button>
+            </div>
+          </div>
+
+          <!-- Class Progress Filter Bar (Requirement 4: Separate Class Records) -->
+          <div class="card" style="margin-bottom: 1.25rem; padding: 0.85rem 1.25rem;">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+              <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                <span
+                  style="font-weight: 800; font-size: 0.88rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.35rem;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    style="width: 17px; height: 17px; color: var(--primary-700);">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                  </svg>
+                  Class Progress Filter:
+                </span>
+                <div class="class-filter-pill-group" id="dash-class-pills">
+                  <button class="class-filter-pill" data-class="Class 6"
+                    onclick="window.gramApp.setClassFilter('Class 6')">Class 6</button>
+                  <button class="class-filter-pill" data-class="Class 7"
+                    onclick="window.gramApp.setClassFilter('Class 7')">Class 7</button>
+                  <button class="class-filter-pill" data-class="Class 8"
+                    onclick="window.gramApp.setClassFilter('Class 8')">Class 8</button>
+                  <button class="class-filter-pill" data-class="Class 9"
+                    onclick="window.gramApp.setClassFilter('Class 9')">Class 9</button>
+                  <button class="class-filter-pill active" data-class="Class 10"
+                    onclick="window.gramApp.setClassFilter('Class 10')">Class 10</button>
+                  <button class="class-filter-pill" data-class="ALL" onclick="window.gramApp.setClassFilter('ALL')">All
+                    Classes</button>
+                </div>
+              </div>
+              <div id="dash-class-scope-indicator"
+                style="font-size: 0.82rem; color: var(--primary-800); font-weight: 700;">
+                Showing Class 10 Records
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Real Calculated Metrics Cards Grid (Zero Hardcoded Values) -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+            <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">📊 Your Assessment Metrics
+            </h2>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Calculated from real attempt records</span>
+          </div>
+
+          <div class="stats-grid"
+            style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-bottom: 2rem;">
+            <!-- Metric 1: Total Quizzes -->
+            <div class="stat-card">
+              <div class="stat-icon stat-icon-blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-quizzes-count">0</span>
+                <span class="stat-label">Quizzes Attempted</span>
+              </div>
+            </div>
+
+            <!-- Metric 2: Total Questions -->
+            <div class="stat-card">
+              <div class="stat-icon stat-icon-purple">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <rect x="3" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="14" width="7" height="7"></rect>
+                  <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-questions-count">0</span>
+                <span class="stat-label">Questions Solved</span>
+              </div>
+            </div>
+
+            <!-- Metric 3: Overall Accuracy -->
+            <div class="stat-card">
+              <div class="stat-icon stat-icon-emerald">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-accuracy-rate">0%</span>
+                <span class="stat-label">Overall Accuracy</span>
+              </div>
+            </div>
+
+            <!-- Metric 4: Average Score -->
+            <div class="stat-card">
+              <div class="stat-icon stat-icon-amber">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 14 14"></polyline>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-average-score">0%</span>
+                <span class="stat-label">Average Quiz Score</span>
+              </div>
+            </div>
+
+            <!-- Metric 5: Best & Latest Score -->
+            <div class="stat-card">
+              <div class="stat-icon stat-icon-blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                  </polygon>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-best-score">0%</span>
+                <span class="stat-label" id="stat-latest-label">Best Score (Latest: 0%)</span>
+              </div>
+            </div>
+
+            <!-- Metric 6: Completed Chapters & Sessions -->
+            <div class="stat-card">
+              <div class="stat-icon stat-icon-purple">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-chapters-count">0</span>
+                <span class="stat-label" id="stat-sessions-label">Chapters Mastered (0 Days)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Empty State (Shown when 0 quizzes taken) -->
+          <div id="dash-empty-state" class="card"
+            style="text-align: center; padding: 2.5rem 1.5rem; margin-bottom: 2rem; background: var(--bg-surface); border: 2px dashed var(--border-light);">
+            <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🎯</div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">
+              Ready for Your First Challenge?
+            </h3>
+            <p style="color: var(--text-secondary); max-width: 520px; margin: 0 auto 1.5rem; font-size: 0.92rem;">
+              You haven't completed any quizzes yet on this device profile. Choose your class and subject to take a
+              quick 5-question practice quiz, and watch your score trends, mastery badges, and learning streak come to
+              life!
+            </p>
+            <button class="btn btn-primary" onclick="window.gramApp.navigateTo('quiz')">
+              🚀 Start First Practice Quiz
+            </button>
+          </div>
+
+          <!-- Dynamic Performance Content (Shown when quizzes exist) -->
+          <div id="dash-has-data-area" class="hidden">
+            <!-- Score Trend Chart Card -->
+            <div class="card" style="margin-bottom: 2rem;">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                      <polyline points="17 6 23 6 23 12"></polyline>
+                    </svg>
+                    Score Progression Trend
+                  </div>
+                  <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">
+                    Chronological quiz scores over time across multiple attempts
+                  </p>
+                </div>
+                <div id="dash-trend-improvement-pill">
+                  <!-- e.g. Improved +15% over last attempts -->
+                </div>
+              </div>
+
+              <!-- Responsive SVG Line Chart -->
+              <div class="score-trend-svg-box" id="dash-score-chart-container">
+                <!-- Dynamically rendered by app.js -->
+              </div>
+            </div>
+
+            <!-- 2-Column Split: Subject Mastery on Left | Learning Gap Alerts on Right -->
+            <div
+              style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+              <!-- Left Column: Subject-Wise Performance & Chapter Progress -->
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M18 20V10"></path>
+                      <path d="M12 20V4"></path>
+                      <path d="M6 20v-6"></path>
+                    </svg>
+                    Subject Performance
+                  </div>
+                  <span class="badge badge-sky" id="dash-subject-ratio">Maths & Science</span>
+                </div>
+
+                <!-- Mathematics Bar -->
+                <div style="margin-bottom: 1.15rem;">
+                  <div style="display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 700;">
+                    <span>📐 Mathematics</span>
+                    <span id="dash-maths-accuracy">0% Accuracy</span>
+                  </div>
+                  <div class="subject-bar-track">
+                    <div id="dash-maths-bar-fill" class="subject-bar-fill"
+                      style="width: 0%; background: var(--primary-600);"></div>
+                  </div>
+                  <span style="font-size: 0.78rem; color: var(--text-muted);" id="dash-maths-subtext">0 questions
+                    solved</span>
+                </div>
+
+                <!-- Science Bar -->
+                <div style="margin-bottom: 1.5rem;">
+                  <div style="display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 700;">
+                    <span>🔬 Science</span>
+                    <span id="dash-science-accuracy">0% Accuracy</span>
+                  </div>
+                  <div class="subject-bar-track">
+                    <div id="dash-science-bar-fill" class="subject-bar-fill"
+                      style="width: 0%; background: var(--accent-emerald);"></div>
+                  </div>
+                  <span style="font-size: 0.78rem; color: var(--text-muted);" id="dash-science-subtext">0 questions
+                    solved</span>
+                </div>
+
+                <!-- Chapter Completion Mini-List -->
+                <div style="border-top: 1px solid var(--border-light); padding-top: 1rem;">
+                  <div
+                    style="font-size: 0.88rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.65rem;">
+                    Chapter Completion Status
+                  </div>
+                  <div id="dash-chapter-progress-list" style="display: flex; flex-direction: column; gap: 0.45rem;">
+                    <!-- Populated dynamically -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Column: Learning-Gap Alerts & Targeted Revision Recommendations -->
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title" style="color: var(--accent-rose);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="12" y1="8" x2="12" y2="12"></line>
+                      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    Learning-Gap Alerts
+                  </div>
+                  <span class="badge badge-rose" id="dash-gaps-badge">0 Concepts to Revise</span>
+                </div>
+
+                <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 0.85rem;">
+                  Concepts flagged with repeated missed answers (transparent threshold: &lt;60% accuracy over 2+
+                  attempts).
+                </p>
+
+                <div id="dash-gaps-list">
+                  <!-- Populated dynamically -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Recommended Next Chapter Quiz & Continue Learning -->
+            <div id="dash-recommendation-card" class="card"
+              style="margin-bottom: 2rem; background: var(--bg-surface); border-left: 4px solid var(--primary-600); padding: 1.15rem 1.35rem;">
+              <!-- Populated dynamically by app.js: shows next recommended chapter quiz and resume revision options -->
+            </div>
+
+            <!-- Recent Quiz Attempts History Table -->
+            <div class="card" style="margin-bottom: 2rem;">
+              <div class="card-header">
+                <div class="card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 14 14"></polyline>
+                  </svg>
+                  Recent Quiz Attempts
+                </div>
+                <button class="btn btn-sm btn-ghost" onclick="window.gramApp.navigateTo('quiz')">Take New Quiz</button>
+              </div>
+
+              <div id="dash-recent-attempts-container" style="overflow-x: auto;">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Row: Recent Study Notes & Offline Status -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+            <!-- Column 1: Model & Offline PWA Status -->
+            <div class="card" id="dash-model-status-card"
+              style="background: var(--primary-50); border-color: var(--primary-200); padding: 1.15rem 1.35rem;">
+              <!-- Populated dynamically by app.js -->
+            </div>
+
+            <!-- Column 2: Recent Notes Library -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                  </svg>
+                  Saved Study Notes
+                </div>
+                <button class="btn btn-sm btn-ghost" onclick="window.gramApp.navigateTo('notes')">View All</button>
+              </div>
+              <div id="dash-recent-notes">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= VIEW 1.5: INTERACTIVE QUIZZES & ASSESSMENTS ================= -->
+        <section id="view-quiz" class="app-view">
+          <div class="view-top-bar">
+            <div class="view-heading-group">
+              <h1 class="view-main-title">Interactive Quizzes & Assessments 🎯</h1>
+              <p class="view-sub-title">Tamil Nadu Samacheer Kalvi Classes 6–10 (Maths & Science)</p>
+            </div>
+            <button class="header-student-pill" onclick="window.gramApp.openStudentLoginModal()"
+              title="Switch Student Profile">
+              <span class="pill-avatar">👩‍🎓</span>
+              <span class="pill-name">Student</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                style="width: 14px; height: 14px;">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          <!-- 1. Interactive 5-Step Quiz Wizard (Steps 1 to 4) -->
+          <div id="quiz-wizard-container" class="card" style="margin-bottom: 2rem;">
+            <!-- Breadcrumb Navigation & Step Indicator -->
+            <div class="quiz-wizard-breadcrumb-bar">
+              <div class="wizard-steps-track">
+                <div class="wizard-step-node active" id="step-node-1">
+                  <span class="wizard-step-num">1</span>
+                  <span>Class</span>
+                </div>
+                <span class="wizard-divider">›</span>
+                <div class="wizard-step-node" id="step-node-2">
+                  <span class="wizard-step-num">2</span>
+                  <span>Subject</span>
+                </div>
+                <span class="wizard-divider">›</span>
+                <div class="wizard-step-node" id="step-node-3">
+                  <span class="wizard-step-num">3</span>
+                  <span>Chapter</span>
+                </div>
+                <span class="wizard-divider">›</span>
+                <div class="wizard-step-node" id="step-node-4">
+                  <span class="wizard-step-num">4</span>
+                  <span>Quiz Type</span>
+                </div>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <button id="wizard-btn-back" class="btn btn-sm btn-outline hidden"
+                  onclick="window.gramQuiz.wizardBack()">
+                  ← Back
+                </button>
+                <span class="badge badge-emerald">100% Offline Practice</span>
+              </div>
+            </div>
+
+            <!-- STEP 1: Select Class Screen -->
+            <div id="wizard-panel-step1">
+              <div style="margin-bottom: 1.25rem;">
+                <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.35rem;">
+                  Step 1 — Select Your Class 🏫
+                </h3>
+                <p style="font-size: 0.88rem; color: var(--text-secondary);">
+                  Choose the grade you want to practice for Tamil Nadu Samacheer Kalvi.
+                </p>
+              </div>
+
+              <div class="quiz-wizard-grid" id="wizard-class-cards-container">
+                <!-- Dynamically populated with Class 6, 7, 8, 9, 10 -->
+              </div>
+            </div>
+
+            <!-- STEP 2: Select Subject Screen -->
+            <div id="wizard-panel-step2" class="hidden">
+              <div style="margin-bottom: 1.25rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem; flex-wrap: wrap;">
+                  <span class="badge badge-purple" id="wizard-step2-class-badge">Class</span>
+                  <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin: 0;">
+                    Step 2 — Select Subject 📚
+                  </h3>
+                </div>
+                <p style="font-size: 0.88rem; color: var(--text-secondary);">
+                  Choose the subject you want to practice for <span id="wizard-step2-class-name"
+                    style="font-weight: 700;">Class</span>.
+                </p>
+              </div>
+
+              <div class="quiz-wizard-grid" id="wizard-subject-cards-container">
+                <!-- Mathematics & Science cards populated dynamically -->
+              </div>
+            </div>
+
+            <!-- STEP 3: Select Chapter Screen -->
+            <div id="wizard-panel-step3" class="hidden">
+              <div style="margin-bottom: 1.25rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem; flex-wrap: wrap;">
+                  <span class="badge badge-purple" id="wizard-step3-class-badge">Class</span>
+                  <span class="badge badge-sky" id="wizard-step3-subject-badge">Subject</span>
+                  <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin: 0;">
+                    Step 3 — Select Chapter 📖
+                  </h3>
+                </div>
+                <p style="font-size: 0.88rem; color: var(--text-secondary);">
+                  Chapters with verified questions available in our offline curriculum bank:
+                </p>
+              </div>
+
+              <div class="quiz-wizard-grid" id="wizard-chapter-cards-container">
+                <!-- Loaded dynamically, no empty chapters -->
+              </div>
+            </div>
+
+            <!-- STEP 4: Select Quiz Mode Screen -->
+            <div id="wizard-panel-step4" class="hidden">
+              <div style="margin-bottom: 1.25rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem; flex-wrap: wrap;">
+                  <span class="badge badge-purple" id="wizard-step4-class-badge">Class</span>
+                  <span class="badge badge-sky" id="wizard-step4-subject-badge">Subject</span>
+                  <span class="badge badge-emerald" id="wizard-step4-chapter-badge">Chapter</span>
+                  <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin: 0;">
+                    Step 4 — Select Quiz 🎯
+                  </h3>
+                </div>
+                <p style="font-size: 0.88rem; color: var(--text-secondary);" id="wizard-step4-summary-text">
+                  Choose your quiz type.
+                </p>
+              </div>
+
+              <!-- 4 Quiz Modes Grid -->
+              <div class="quiz-mode-grid" id="wizard-quiz-modes-container">
+                <!-- Quick Practice, Chapter Quiz, Mixed Revision, Previous Mistakes -->
+              </div>
+
+              <!-- Difficulty and Options Bar -->
+              <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; padding: 1.15rem; background: var(--bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--border-light); margin: 1.25rem 0;">
+                <div>
+                  <label class="form-label" for="wizard-difficulty-select">Difficulty Preference:</label>
+                  <select id="wizard-difficulty-select" class="select-input"
+                    onchange="window.gramQuiz.updateWizardSummary()">
+                    <option value="ALL" selected>Mixed (Easy, Medium & Hard)</option>
+                    <option value="Easy">Easy (Foundations)</option>
+                    <option value="Medium">Medium (Application)</option>
+                    <option value="Hard">Hard (Board Exam Focus)</option>
+                  </select>
+                </div>
+
+                <div style="display: flex; flex-direction: column; justify-content: flex-end;">
+                  <label style="display: flex; align-items: center; gap: 0.65rem; cursor: pointer; padding: 0.65rem 0;">
+                    <input type="checkbox" id="wizard-timer-toggle" style="width: 18px; height: 18px;">
+                    <div>
+                      <strong style="font-size: 0.9rem;">⏱️ Enable 60s Question Timer</strong>
+                      <div style="font-size: 0.78rem; color: var(--text-muted);">Countdown timer for realistic exam
+                        pacing</div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Launch Action Row -->
+              <div
+                style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem;">
+                <div id="wizard-question-count-indicator"
+                  style="font-weight: 700; color: var(--text-secondary); font-size: 0.92rem;">
+                  <!-- Dynamically populated -->
+                </div>
+                <button id="btn-wizard-launch" class="btn btn-primary"
+                  style="padding: 0.85rem 2.25rem; font-size: 1.05rem;" onclick="window.gramQuiz.launchFromWizard()">
+                  🚀 Attend Quiz Now
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Quiz Runner Container (Active during quiz execution) -->
+          <div id="quiz-runner-container" class="card hidden" style="margin-bottom: 2rem;">
+            <!-- Runner Header: Counter, Timer, Progress -->
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+              <div>
+                <span id="quiz-runner-title"
+                  style="font-weight: 700; font-size: 1.05rem; color: var(--text-primary);">Quiz Title</span>
+                <span id="quiz-difficulty-badge" class="badge badge-amber" style="margin-left: 0.5rem;">Standard</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.85rem;">
+                <span id="quiz-timer-display"
+                  style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">⏱️ Untimed</span>
+                <span id="quiz-question-counter" class="badge badge-sky" style="font-size: 0.82rem;">Question 1 of
+                  5</span>
+              </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container" style="height: 6px; margin-bottom: 1.5rem;">
+              <div class="progress-fill" id="quiz-progress-fill" style="width: 20%; background: var(--primary-600);">
+              </div>
+            </div>
+
+            <!-- Question Card -->
+            <div style="margin-bottom: 1.25rem;">
+              <span id="quiz-question-topic" class="badge badge-purple"
+                style="font-size: 0.72rem; margin-bottom: 0.5rem; display: inline-block;">Topic</span>
+              <h2 id="quiz-question-text"
+                style="font-size: 1.18rem; font-weight: 700; color: var(--text-primary); line-height: 1.45;">
+                Question text goes here
+              </h2>
+            </div>
+
+            <!-- 4 MCQ Options -->
+            <div id="quiz-options-grid" class="quiz-options-container">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- Instant Explanation Card (Appears after answering) -->
+            <div id="quiz-explanation-box" class="quiz-explanation-card hidden">
+              <div id="quiz-explanation-text"></div>
+            </div>
+
+            <!-- Navigation Controls -->
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border-light);">
+              <button id="quiz-btn-prev" class="btn btn-outline" disabled>
+                ← Previous
+              </button>
+              <div style="display: flex; gap: 0.75rem;">
+                <button id="quiz-btn-next" class="btn btn-primary" disabled>
+                  Next Question →
+                </button>
+                <button id="quiz-btn-finish" class="btn btn-primary hidden" disabled
+                  style="background: var(--accent-emerald);">
+                  🏁 Finish & Submit Quiz
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Quiz Results Summary Container -->
+          <div id="quiz-results-container" class="card hidden" style="margin-bottom: 2rem;">
+            <div style="text-align: center; padding: 1.5rem 0.5rem;">
+              <div
+                style="display: inline-flex; align-items: center; justify-content: center; width: 110px; height: 110px; border-radius: 50%; background: var(--primary-50); border: 4px solid var(--primary-600); margin-bottom: 1rem;">
+                <div>
+                  <div id="quiz-result-percentage"
+                    style="font-size: 1.85rem; font-weight: 800; color: var(--primary-800);">100%</div>
+                  <div
+                    style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+                    Score</div>
+                </div>
+              </div>
+
+              <h2 id="quiz-result-feedback-title"
+                style="font-size: 1.4rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem;">
+                🌟 Outstanding Mastery!
+              </h2>
+              <p id="quiz-result-feedback-desc"
+                style="color: var(--text-secondary); max-width: 580px; margin: 0 auto 1.75rem; font-size: 0.95rem; line-height: 1.55;">
+                You demonstrated solid conceptual understanding.
+              </p>
+
+              <!-- Results Metrics Grid -->
+              <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.85rem; max-width: 600px; margin: 0 auto 2rem;">
+                <div
+                  style="background: var(--bg-subtle); padding: 0.85rem; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                  <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">SCORE</div>
+                  <div id="quiz-result-score-num"
+                    style="font-size: 1.3rem; font-weight: 800; color: var(--text-primary);">5 / 5</div>
+                </div>
+                <div
+                  style="background: var(--accent-emerald-light); padding: 0.85rem; border-radius: var(--radius-md); border: 1px solid rgba(45, 106, 79, 0.2);">
+                  <div style="font-size: 0.75rem; font-weight: 700; color: #14532d;">CORRECT</div>
+                  <div id="quiz-result-correct" style="font-size: 1.3rem; font-weight: 800; color: #14532d;">5</div>
+                </div>
+                <div
+                  style="background: var(--accent-rose-light); padding: 0.85rem; border-radius: var(--radius-md); border: 1px solid rgba(190, 18, 60, 0.2);">
+                  <div style="font-size: 0.75rem; font-weight: 700; color: #881337;">INCORRECT</div>
+                  <div id="quiz-result-incorrect" style="font-size: 1.3rem; font-weight: 800; color: #881337;">0</div>
+                </div>
+                <div
+                  style="background: var(--bg-subtle); padding: 0.85rem; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                  <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">TIME SPENT</div>
+                  <div id="quiz-result-time" style="font-size: 1.3rem; font-weight: 800; color: var(--text-primary);">1m
+                    30s</div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div style="display: flex; justify-content: center; gap: 0.85rem; flex-wrap: wrap;">
+                <button id="btn-quiz-review" class="btn btn-outline">
+                  🔍 Review Questions
+                </button>
+                <button id="btn-quiz-retry" class="btn btn-secondary">
+                  🔄 Retry Quiz
+                </button>
+                <button id="btn-quiz-save-notes" class="btn btn-secondary">
+                  💾 Save to Study Notes
+                </button>
+                <button id="btn-quiz-new" class="btn btn-primary">
+                  🎯 New Quiz
+                </button>
+                <button class="btn btn-outline" onclick="window.gramApp.navigateTo('dashboard')">
+                  📊 View Dashboard
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Quiz Review Mode Container -->
+          <div id="quiz-review-container" class="hidden">
+            <div id="quiz-review-list">
+              <!-- Dynamically populated by quiz.js startReviewMode() -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= VIEW 2: AI TUTOR CHAT ================= -->
+        <section id="view-chat" class="app-view">
+          <div class="chat-container">
+            <!-- Chat Header -->
+            <div class="chat-header">
+              <div class="chat-header-tutor">
+                <div class="chat-tutor-avatar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                  </svg>
+                </div>
+                <div class="chat-tutor-info">
+                  <h3>GramLearn AI – Friendly Neighbourhood Tutor</h3>
+                  <div class="chat-tutor-status">
+                    <span id="chat-model-badge" class="badge badge-emerald">
+                      <span class="status-indicator-dot"></span> Friendly AI Active (Instant Offline Brain)
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="chat-header-actions">
+                <!-- Student Pill in Chat Header -->
+                <button class="header-student-pill" onclick="window.gramApp.openStudentLoginModal()"
+                  title="Switch Student Profile" style="padding: 0.35rem 0.75rem;">
+                  <span class="pill-avatar">👩‍🎓</span>
+                  <span class="pill-name">Student</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    style="width: 12px; height: 12px;">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+
+                <!-- Language Toggle -->
+                <div class="lang-toggle-group" title="Switch explanation language">
+                  <button id="btn-lang-en" class="lang-btn active">EN</button>
+                  <button id="btn-lang-ta" class="lang-btn">தமிழ்</button>
+                </div>
+
+                <!-- Clear Chat -->
+                <button id="chat-clear-btn" class="btn btn-icon-sm btn-ghost" title="Clear Conversation"
+                  aria-label="Clear chat">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Model Download & Setup Progress Banner -->
+            <div id="chat-model-progress-banner" class="hidden"
+              style="background: var(--primary-50); border-bottom: 1px solid var(--primary-200); padding: 0.6rem 1rem; font-size: 0.82rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                <span id="chat-model-progress-text" style="font-weight: 700; color: var(--primary-900);">📥 Preparing
+                  SmolLM2 360M Neural Engine for offline tutoring...</span>
+                <span id="chat-model-progress-percent" style="font-weight: 700; color: var(--primary-700);">0%</span>
+              </div>
+              <div class="progress-container"
+                style="height: 6px; background: var(--primary-200); border-radius: 3px; overflow: hidden;">
+                <div id="chat-model-progress-fill" class="progress-fill"
+                  style="width: 0%; height: 100%; background: var(--primary-600); transition: width 0.3s ease;"></div>
+              </div>
+            </div>
+
+            <!-- Messages Window -->
+            <div class="chat-messages" id="chat-messages">
+              <div class="chat-message-row ai">
+                <div class="chat-avatar ai-avatar">AI</div>
+                <div class="message-bubble">
+                  <div class="message-content-inner">
+                    <h4>Hey there! I am your Friendly Neighbourhood AI Tutor. 👋</h4>
+                    <p>I'm here for you whenever you need help—whether it's school homework, Science, Maths, History,
+                      general doubts, study hacks, fun trivia, or practicing English & Tamil—I've got your back!</p>
+                    <p style="margin-top: 0.5rem;">What's on your mind today? Ask me anything or just say hello!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Suggestion Chips Row (Screen 4 Reference) -->
+            <div class="chat-suggestions">
+              <!-- Follow-Up Action Chips matching screenshot -->
+              <button class="chip-btn"
+                data-prompt="Please explain this concept clearly in simple Tamil (தமிழில் சுருக்கமாக விளக்குக).">
+                🇮🇳 Explain in Tamil
+              </button>
+              <button class="chip-btn" data-prompt="Please provide a clear and concise 3-point summary of this topic.">
+                📝 Short Summary
+              </button>
+              <button class="chip-btn"
+                data-prompt="What are the key points, core definitions, and formulas to remember for this?">
+                💡 Important Points
+              </button>
+              <button class="chip-btn"
+                data-prompt="Can you give me a simple real-life everyday example to easily understand this?">
+                🏏 Give Example
+              </button>
+
+              <!-- Topic Starter Chips -->
+              <button class="chip-btn" data-prompt="What is Gravity and how does it work?">
+                🌌 What is Gravity?
+              </button>
+              <button class="chip-btn"
+                data-prompt="Dr. APJ Abdul Kalam pathi sollunga (அப்துல் கலாம் வாழ்க்கை வரலாறு).">
+                🚀 Dr. APJ Abdul Kalam
+              </button>
+              <button class="chip-btn" data-prompt="Tell me a fun clean joke to make me laugh!">
+                😂 Tell me a joke!
+              </button>
+              <button class="chip-btn" data-prompt="What is Artificial Intelligence (AI) and how does it work?">
+                🤖 What is AI?
+              </button>
+              <button class="chip-btn"
+                data-prompt="Explain Sir Isaac Newton's 3 Laws of Motion with real-life examples.">
+                🍎 Newton's Laws
+              </button>
+              <button class="chip-btn" data-prompt="How does Photosynthesis work in plants? (ஒளிச்சேர்க்கை விளக்கம்)">
+                🌿 Photosynthesis
+              </button>
+              <button class="chip-btn" data-prompt="Explain Pythagoras theorem with an easy practical example.">
+                📐 Pythagoras Theorem
+              </button>
+              <button class="chip-btn" data-prompt="What are 5 scientifically proven study tips for exams?">
+                💡 Smart Study Hacks
+              </button>
+              <button class="chip-btn"
+                data-prompt="Why do we see lightning before hearing thunder? Speed of light vs sound.">
+                ⚡ Light vs Sound
+              </button>
+              <button class="chip-btn" data-prompt="How do computers work with CPU, RAM, and Storage?">
+                💻 CPU & RAM Explained
+              </button>
+              <button class="chip-btn" data-prompt="How can I speak fluent English confidently without fear?">
+                🗣️ Fluent English Tips
+              </button>
+              <button class="chip-btn"
+                data-prompt="Please explain how to convert an Active Voice sentence to Passive Voice in Tamil (தமிழில் விளக்குக).">
+                🇮🇳 Voice in Tamil (தமிழில்)
+              </button>
+            </div>
+
+            <!-- Chat Input Bar -->
+            <div class="chat-input-bar">
+              <button id="chat-ocr-attach-btn" class="btn btn-icon-sm btn-ghost" type="button"
+                title="Scan Textbook Photo with OCR" aria-label="Scan Photo"
+                style="margin-right: 0.35rem; color: var(--primary-700); font-size: 1.15rem; flex-shrink: 0;">
+                📷
+              </button>
+              <textarea id="chat-input-text" class="chat-textarea" rows="1"
+                placeholder="Ask me anything (Science, Math, History, Homework help, or say Hi!)..."
+                aria-label="Ask your question"></textarea>
+              <button id="chat-send-btn" class="send-btn" title="Send message" aria-label="Send message">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  style="width: 20px; height: 20px;">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= VIEW 3: TEXTBOOK OCR SCANNER (OCR & ASK) ================= -->
+        <section id="view-ocr" class="app-view">
+          <!-- OCR & Ask Header Bar (Screen 3 Reference) -->
+          <div class="view-top-bar">
+            <div class="view-heading-group">
+              <h1 class="view-main-title">OCR & Ask</h1>
+              <p class="view-sub-title">Upload a question image or take a photo, and get instant answers.</p>
+            </div>
+            <button class="header-student-pill" onclick="window.gramApp.openStudentLoginModal()"
+              title="Switch Student Profile">
+              <span class="pill-avatar">👩‍🎓</span>
+              <span class="pill-name">Student</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                style="width: 14px; height: 14px;">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          <!-- 2-Column Split: Upload Image on Left | Preview Card on Right (Screen 3 Reference) -->
+          <div class="ocr-split-grid">
+            <!-- Left Column: Upload Dropzone Card -->
+            <div class="ocr-upload-card" id="ocr-dropzone">
+              <div class="ocr-camera-hero-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                  <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+              </div>
+              <div class="ocr-upload-card-title">Upload Image</div>
+              <div class="ocr-upload-card-subtitle">or drag and drop (JPG, PNG, WEBP)</div>
+              <div class="ocr-upload-btns">
+                <button class="btn btn-primary" type="button"
+                  onclick="document.getElementById('ocr-file-input').click()">
+                  📁 Choose File
+                </button>
+                <button class="btn btn-secondary" type="button"
+                  onclick="document.getElementById('ocr-camera-input').click()">
+                  📸 Camera Snap
+                </button>
+              </div>
+              <input type="file" id="ocr-file-input" accept="image/*" style="display: none;">
+              <input type="file" id="ocr-camera-input" accept="image/*" capture="environment" style="display: none;">
+            </div>
+
+            <!-- Right Column: Preview & Enhancement Card -->
+            <div class="ocr-preview-column-card" id="ocr-preview-container">
+              <div class="card-header" style="margin-bottom: 0.75rem;">
+                <div class="card-title" style="font-size: 1.05rem;">
+                  Preview
+                </div>
+                <div style="display: flex; gap: 0.35rem; align-items: center; flex-wrap: wrap;">
+                  <button type="button" class="ocr-filter-btn" onclick="window.gramOCR.rotateImage(90)" title="Rotate image 90° clockwise">🔄 Rotate 90°</button>
+                  <button type="button" class="ocr-filter-btn active" data-filter="enhanced"
+                    onclick="window.gramOCR.setFilter('enhanced')" title="Auto-enhance contrast, exposure & sharpen">✨ Auto-Clean</button>
+                  <button type="button" class="ocr-filter-btn" data-filter="binarized"
+                    onclick="window.gramOCR.setFilter('binarized')" title="Otsu adaptive crisp black & white for print">⬛ B&W Print</button>
+                  <button type="button" class="ocr-filter-btn" data-filter="grayscale"
+                    onclick="window.gramOCR.setFilter('grayscale')">Grayscale</button>
+                  <button type="button" class="ocr-filter-btn" data-filter="original"
+                    onclick="window.gramOCR.setFilter('original')">Original</button>
+                </div>
+              </div>
+
+              <div class="ocr-preview-viewport">
+                <!-- Placeholder shown when no image loaded -->
+                <div id="ocr-preview-placeholder" class="ocr-preview-placeholder">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                  </svg>
+                  <p>Choose an image or try a demo sample below to preview & scan textbook text.</p>
+                </div>
+                <img id="ocr-preview-img" alt="Textbook Scan Preview" src=""
+                  style="display: none; max-width: 100%; max-height: 220px; object-fit: contain; border-radius: var(--radius-sm);" />
+                <canvas id="ocr-preview-canvas" style="display: none;"></canvas>
+              </div>
+
+              <button id="ocr-start-extract-btn" class="btn btn-primary" style="width: 100%;"
+                onclick="window.gramOCR.startOCR()">
+                ⚡ Extract Text with OCR
+              </button>
+
+              <!-- In-place Quick Status Notification inside Preview Card -->
+              <div id="ocr-quick-success-banner" class="ocr-quick-success hidden">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span style="font-size: 1.25rem;">✅</span>
+                    <div>
+                      <div style="font-weight: 800; font-size: 0.88rem; color: #065f46;">Text Extracted Successfully!</div>
+                      <div style="font-size: 0.76rem; color: #047857;" id="ocr-quick-stats">Ready for AI explanation below</div>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-sm btn-primary" onclick="window.gramOCR.scrollToResult()" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 700; white-space: nowrap;">
+                    👇 View Extracted Text
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Progress Bar (Hidden by default, shown during scan) -->
+          <div id="ocr-progress-container" class="card hidden"
+            style="margin-bottom: 1.5rem; background: var(--primary-50); border-color: var(--primary-200);">
+            <div
+              style="display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 700;">
+              <span id="ocr-progress-status">Initializing Tesseract.js engine...</span>
+            </div>
+            <div class="progress-container">
+              <div class="progress-fill" id="ocr-progress-bar" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <!-- Extracted Text Result & Prominent Get Answer Action Center (Hidden by default) -->
+          <div id="ocr-result-container" class="card hidden" style="margin-bottom: 1.5rem;">
+            <div class="card-header">
+              <div class="card-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                Extracted Text
+              </div>
+              <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                <span class="badge badge-sky" id="ocr-word-count">0 words</span>
+                <span class="badge badge-emerald hidden" id="ocr-confidence-badge">🎯 95% Quality</span>
+                <button class="btn btn-sm btn-ghost" onclick="window.gramOCR.copyExtractedText()" title="Copy Text">📋
+                  Copy</button>
+                <button class="btn btn-sm btn-ghost" onclick="window.gramOCR.saveToNotes()" title="Save as Note">💾 Save
+                  Note</button>
+              </div>
+            </div>
+
+            <!-- Visible confirmation alert banner -->
+            <div id="ocr-result-alert" style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: var(--radius-md); padding: 0.65rem 0.9rem; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
+              <span style="font-size: 0.84rem; color: #065f46; font-weight: 600;">
+                ✨ <strong>Text recognized below!</strong> You can edit the text directly or click <strong>✨ Get Answer with AI</strong>.
+              </span>
+              <span class="badge badge-emerald" style="font-size: 0.74rem;">Ready for AI</span>
+            </div>
+
+            <textarea id="ocr-extracted-text" class="input-text" rows="7"
+              style="font-family: inherit; font-size: 0.92rem; line-height: 1.5; resize: vertical;"
+              placeholder="Extracted textbook text will appear here. You can also edit or paste text directly..."></textarea>
+
+            <!-- Prominent Get Answer Call-To-Action Button (Screen 3 Reference) -->
+            <button class="btn-get-answer" id="ocr-get-answer-btn" onclick="window.gramOCR.askAI('solve-questions')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                style="width: 20px; height: 20px;">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                </polygon>
+              </svg>
+              <span>✨ Get Answer with AI</span>
+            </button>
+
+            <!-- Quick Action Bilingual Chips Underneath -->
+            <div style="margin-top: 0.5rem;">
+              <div class="ocr-actions-flex">
+                <button class="btn btn-secondary btn-sm" onclick="window.gramOCR.askAI('explain-tamil')"
+                  style="font-weight: 700;">
+                  🇮🇳 தமிழில் விளக்கம் (Explain in Tamil)
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="window.gramOCR.askAI('explain-english')">
+                  💡 Simple English
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="window.gramOCR.askAI('solve-questions')">
+                  ❓ Solve Questions
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="window.gramOCR.askAI('summarize')">
+                  📝 Short Summary
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="window.gramOCR.askAI('quiz')">
+                  🎯 Practice Quiz
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="window.gramOCR.openInAIChat()">
+                  💬 Open in AI Chat
+                </button>
+              </div>
+            </div>
+
+            <!-- Custom Question Input Box -->
+            <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border-light);">
+              <label class="form-label" for="ocr-custom-question-input" style="font-weight: 700;">
+                💬 Ask a specific question about this textbook text:
+              </label>
+              <div style="display: flex; gap: 0.5rem; margin-top: 0.35rem;">
+                <input type="text" id="ocr-custom-question-input" class="input-text"
+                  placeholder="e.g. What is the role of stomata? or Explain formula F=ma"
+                  onkeydown="if(event.key==='Enter') window.gramOCR.handleCustomQuestionSubmit()" />
+                <button class="btn btn-primary" style="flex-shrink: 0;"
+                  onclick="window.gramOCR.handleCustomQuestionSubmit()">
+                  Ask AI
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Embedded AI Solution Card (Hidden by default) -->
+          <div id="ocr-ai-answer-card" class="card hidden"
+            style="margin-bottom: 2rem; border-left: 4px solid var(--primary-600);">
+            <div class="card-header">
+              <div class="card-title" id="ocr-ai-answer-title" style="color: var(--primary-800);">
+                💡 AI Tutor Explanation
+              </div>
+              <div style="display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;">
+                <button class="btn btn-sm btn-outline" id="ocr-tts-btn" onclick="window.gramOCR.toggleSpeech()" title="Read aloud this answer">
+                  🔊 Listen
+                </button>
+                <button class="btn btn-sm btn-outline" onclick="window.gramOCR.openInAIChat()">💬 Continue in
+                  Chat</button>
+                <button class="btn btn-sm btn-secondary" onclick="window.gramOCR.saveToNotes()">💾 Save to
+                  Notes</button>
+              </div>
+            </div>
+            <div id="ocr-ai-answer-content" class="message-content-inner" style="line-height: 1.6; font-size: 0.95rem;">
+              <!-- Dynamically populated with AI response -->
+            </div>
+          </div>
+
+          <!-- Quick Test Demo Samples (Moved below results) -->
+          <div style="margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+              <h3 style="font-size: 1.02rem; font-weight: 700; color: var(--text-primary);">
+                ⚡ Quick Test: Instant Textbook Samples
+              </h3>
+              <span style="font-size: 0.78rem; color: var(--text-muted);">1-Click Demo Scans</span>
+            </div>
+            <div class="ocr-demo-grid" id="ocr-demo-chips">
+              <!-- Populated by ocr.js -->
+            </div>
+          </div>
+
+          <!-- Previous Scans History -->
+          <div class="card" style="margin-top: 1.5rem;">
+            <div class="card-header">
+              <div class="card-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 14 14"></polyline>
+                </svg>
+                Recent Textbook Scans
+              </div>
+            </div>
+            <div id="ocr-history-list">
+              <!-- Dynamically populated by ocr.js -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= VIEW 4: LEARNING GAPS ================= -->
+        <section id="view-gaps" class="app-view">
+          <div class="view-header">
+            <div class="view-header-content">
+              <h1>Foundational Learning Gap Detection</h1>
+              <p>Identify underlying conceptual hurdles in English grammar and receive targeted remedial guidance.</p>
+            </div>
+          </div>
+
+          <!-- Scientific Assessment Disclaimer -->
+          <div class="alert alert-info" style="font-size: 0.85rem; margin-bottom: 1.75rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <div>
+              <strong>Pedagogical Heuristic Notice:</strong> This diagnostic tool uses algorithmic error-pattern
+              classification to recommend prerequisite study topics. It is designed as an educational revision aid and
+              does not constitute a standardized psychological or psychometric assessment.
+            </div>
+          </div>
+
+          <!-- Topic Selector Cards -->
+          <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem;">Choose a Grammar Diagnostic Pathway:
+          </h3>
+          <div class="quick-actions-grid" id="gaps-topic-selection">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Interactive Diagnostic Quiz & Report Area -->
+          <div id="gaps-quiz-area">
+            <!-- Dynamically populated on topic select -->
+          </div>
+
+          <!-- Historical Gap Assessments -->
+          <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+              <div class="card-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 14 14"></polyline>
+                </svg>
+                Assessment History & Mastery Tracking
+              </div>
+            </div>
+            <div id="gaps-history-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= VIEW 5: SAVED NOTES ================= -->
+        <section id="view-notes" class="app-view">
+          <div class="view-header">
+            <div class="view-header-content">
+              <h1>Saved Notes & Study Archive</h1>
+              <p>Your personal revision notes, grammar definitions, and excerpts saved from AI conversations.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn btn-outline btn-sm" onclick="window.gramNotes.seedDefaultSyllabusNotes(true)"
+                title="Populate complete Tamil Nadu 6th to 12th syllabus revision notes into offline storage">
+                📚 Load TN Syllabus Notes (6th-12th)
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="window.gramNotes.exportNotesAsJson()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Export Backup
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="window.gramNotes.openCreateModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                New Note
+              </button>
+            </div>
+          </div>
+
+          <!-- Search & Filter Controls -->
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center;">
+            <div class="search-bar-wrapper" style="flex: 1; min-width: 240px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="notes-search-input" class="search-input"
+                placeholder="Search notes by standard, subject, formula, or concept...">
+            </div>
+
+            <!-- Category Filter Pills -->
+            <div style="display: flex; gap: 0.4rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.25rem;">
+              <button class="chip-btn note-filter-pill active" data-tag="All">All</button>
+              <button class="chip-btn note-filter-pill" data-tag="10th SSLC">10th SSLC</button>
+              <button class="chip-btn note-filter-pill" data-tag="12th HSC">12th HSC</button>
+              <button class="chip-btn note-filter-pill" data-tag="11th HSC">11th HSC</button>
+              <button class="chip-btn note-filter-pill" data-tag="9th Std">9th Std</button>
+              <button class="chip-btn note-filter-pill" data-tag="6th-8th Std">6th-8th</button>
+              <button class="chip-btn note-filter-pill" data-tag="Science">Science</button>
+              <button class="chip-btn note-filter-pill" data-tag="Mathematics">Maths</button>
+              <button class="chip-btn note-filter-pill" data-tag="Grammar Rule">Grammar</button>
+              <button class="chip-btn note-filter-pill" data-tag="AI Tutor Chat">AI Chat</button>
+            </div>
+          </div>
+
+          <!-- Notes Grid -->
+          <div id="notes-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem;">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
+
+        <!-- ================= VIEW 6: MODEL STATUS & SETTINGS ================= -->
+        <section id="view-settings" class="app-view">
+          <div class="view-header">
+            <div class="view-header-content">
+              <h1>Offline AI Model & Settings</h1>
+              <p>Configure in-browser WebLLM quantized models, check hardware WebGPU compatibility, and manage cache
+                storage.</p>
+            </div>
+          </div>
+
+          <!-- Offline Airplane Mode Verification Guide -->
+          <div class="card"
+            style="margin-bottom: 2rem; background: var(--grad-hero); border-color: var(--primary-200);">
+            <div class="card-title" style="margin-bottom: 0.5rem;">
+              ✈️ Airplane Mode Offline Readiness Checklist
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">
+              Follow these simple steps to ensure GramLearn AI functions 100% without an active internet connection:
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.88rem;">
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <span class="badge badge-emerald">Step 1</span>
+                <span>Open this website once over Wi-Fi so the PWA Service Worker caches the interface and
+                  PDF.js.</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <span class="badge badge-emerald">Step 2</span>
+                <span>Click <strong>"Download & Cache Model"</strong> below while on Wi-Fi to store the model weights
+                  (~230MB) permanently in browser storage.</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <span class="badge badge-emerald">Step 3</span>
+                <span>Turn ON <strong>Airplane Mode</strong> (turn off Wi-Fi and Mobile Data).</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <span class="badge badge-emerald">Step 4</span>
+                <span>Open GramLearn AI: Ask any grammar question in chat or query syllabus documents—inference executes
+                  locally!</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hardware Diagnostics Box -->
+          <div class="card" style="margin-bottom: 2rem;">
+            <div class="card-title" style="margin-bottom: 1rem;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+              Device & Hardware Diagnostics
+            </div>
+            <div id="hardware-report-box">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Model Selection & Cache Management -->
+          <div class="card" style="margin-bottom: 2rem;">
+            <div class="card-title" style="margin-bottom: 1rem;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+              Offline Neural Model Manager
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="settings-model-select">Select In-Browser Model Architecture:</label>
+              <select id="settings-model-select" class="select-input">
+                <!-- Dynamically populated -->
+              </select>
+            </div>
+
+            <div id="model-specs-card">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- Current Status & Progress -->
+            <div style="margin: 1.5rem 0;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary);">Model Status:</span>
+                <span id="model-current-status-text">
+                  <span class="badge badge-amber">Checking...</span>
+                </span>
+              </div>
+
+              <!-- Live Progress Bar -->
+              <div id="model-progress-container" class="hidden">
+                <div class="progress-container">
+                  <div class="progress-fill" id="model-progress-fill" style="width: 0%;"></div>
+                </div>
+                <div id="model-progress-text"
+                  style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.35rem;">
+                  Downloading model...
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+              <button id="btn-download-model" class="btn btn-primary">
+                Download & Cache Model
+              </button>
+              <button id="btn-unload-model" class="btn btn-outline hidden">
+                Unload from RAM (Free Memory)
+              </button>
+            </div>
+          </div>
+
+          <!-- Browser Storage & Cache Report -->
+          <div class="card" style="margin-bottom: 2rem;">
+            <div class="card-title" style="margin-bottom: 0.75rem;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                </path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+              Storage & Cache Allocation
+            </div>
+            <div id="storage-report-box">
+              <p style="color: var(--text-muted); font-size: 0.88rem;">Calculating local storage estimate...</p>
+            </div>
+          </div>
+
+          <!-- Student Profile Preferences -->
+          <div class="card">
+            <div class="card-title" style="margin-bottom: 1rem;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              Student Profile Preferences
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="settings-student-name">Student Name:</label>
+              <input type="text" id="settings-student-name" class="input-text" placeholder="Enter your name">
+            </div>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">
+              Saved locally on your device in IndexedDB. No account or cloud sync required.
+            </p>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ======================================================================
+       Modals & Popups
+       ====================================================================== -->
+
+  <!-- Student Personalization Settings Modal -->
+  <div class="modal-overlay" id="personalization-modal">
+    <div class="modal-box" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3 class="modal-title">🎯 Personalize Your AI Tutor</h3>
+        <button class="modal-close-btn" onclick="window.gramApp.closePersonalizationModal()" aria-label="Close modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            style="width: 20px; height: 20px;">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+        Customize how your offline AI tutor communicates, explains concepts, and crafts real-life analogies for your
+        exact class level.
+      </p>
+
+      <div class="form-group">
+        <label class="form-label" for="pers-grade">Your Class / Standard Level:</label>
+        <select id="pers-grade" class="select-input">
+          <option value="Class 6-8 (Middle School)">Class 6-8 (Middle School)</option>
+          <option value="Class 9-10 (SSLC / High School)" selected>Class 9-10 (SSLC / High School)</option>
+          <option value="Class 11-12 (Higher Secondary)">Class 11-12 (Higher Secondary / HSC)</option>
+          <option value="College / Degree">College / Degree Student</option>
+          <option value="General Learner">General Self-Learner</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="pers-style">Explanation Style & Tone:</label>
+        <select id="pers-style" class="select-input">
+          <option value="Bilingual Tanglish (தமிழ் விளக்கம்)" selected>Bilingual Tanglish (English terms + Friendly
+            தமிழ் விளக்கம்)</option>
+          <option value="Simple & Brief English">Simple & Brief English (Easy words, bullet points)</option>
+          <option value="Detailed with Real-Life Examples">Detailed with Real-Life Examples & Formulas</option>
+          <option value="Pure Simple Tamil">Pure Simple Tamil (எளிய தூய தமிழ்)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="pers-pace">Learning Pace:</label>
+        <select id="pers-pace" class="select-input">
+          <option value="Gentle & Encouraging">Gentle & Encouraging (Takes time, explains basics)</option>
+          <option value="Clear & Relatable" selected>Clear & Relatable (Standard pace with everyday analogies)</option>
+          <option value="Fast & Exam-Oriented">Fast & Exam-Oriented (Direct formulas & high-yield points)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Favorite Topics for Real-Life Analogies:</label>
+        <div class="interest-checkbox-grid">
+          <label class="interest-checkbox-label">
+            <input type="checkbox" class="pers-interest-checkbox" value="Science & Space" checked>
+            <span>🚀 Science & Space</span>
+          </label>
+          <label class="interest-checkbox-label">
+            <input type="checkbox" class="pers-interest-checkbox" value="Cricket & Sports" checked>
+            <span>🏏 Cricket & Sports</span>
+          </label>
+          <label class="interest-checkbox-label">
+            <input type="checkbox" class="pers-interest-checkbox" value="Everyday Life & Food" checked>
+            <span>☕ Everyday Life</span>
+          </label>
+          <label class="interest-checkbox-label">
+            <input type="checkbox" class="pers-interest-checkbox" value="Tech & Mobile Phones">
+            <span>📱 Tech & Phones</span>
+          </label>
+          <label class="interest-checkbox-label">
+            <input type="checkbox" class="pers-interest-checkbox" value="Nature & Animals">
+            <span>🌿 Nature & Animals</span>
+          </label>
+          <label class="interest-checkbox-label">
+            <input type="checkbox" class="pers-interest-checkbox" value="Stories & History">
+            <span>📜 Stories & History</span>
+          </label>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+        <button class="btn btn-outline" style="flex: 1;"
+          onclick="window.gramApp.closePersonalizationModal()">Cancel</button>
+        <button class="btn btn-primary" style="flex: 2;" onclick="window.gramApp.savePersonalizationForm()">Save
+          Personalization</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Note Editor Modal -->
+  <div class="modal-overlay" id="note-editor-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="note-modal-title">Create New Note</h3>
+        <button class="modal-close-btn" onclick="window.gramNotes.closeEditorModal()" aria-label="Close note editor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            style="width: 20px; height: 20px;">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="note-title-input">Note Title:</label>
+        <input type="text" id="note-title-input" class="input-text"
+          placeholder="e.g., Simple Past Rule or Vocabulary list">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="note-tag-select">Category / Tag:</label>
+        <select id="note-tag-select" class="select-input">
+          <option value="Grammar Rule">Grammar Rule</option>
+          <option value="Vocabulary">Vocabulary</option>
+          <option value="Syllabus Excerpt">Syllabus Excerpt</option>
+          <option value="AI Tutor Chat">AI Tutor Chat</option>
+          <option value="General">General</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="note-content-input">Note Content:</label>
+        <textarea id="note-content-input" class="input-text" rows="6"
+          placeholder="Write rules, formulas, examples, or revision points..."></textarea>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+        <button class="btn btn-outline" onclick="window.gramNotes.closeEditorModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="window.gramNotes.saveNoteFromModal()">Save Note</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Note Reader Modal (Full View, Formula Display & AI Study) -->
+  <div class="modal-overlay" id="note-reader-modal">
+    <div class="modal-box" style="max-width: 680px; max-height: 85vh; display: flex; flex-direction: column;">
+      <div class="modal-header"
+        style="flex-shrink: 0; padding-bottom: 0.85rem; border-bottom: 1px solid var(--border-light);">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+            <span class="badge" id="note-reader-tag">10th SSLC</span>
+            <span style="font-size: 0.78rem; color: var(--text-muted);" id="note-reader-date"></span>
+          </div>
+          <h3 class="modal-title" id="note-reader-title" style="font-size: 1.22rem; line-height: 1.35;">Note Title</h3>
+        </div>
+        <button class="modal-close-btn" onclick="window.gramNotes.closeReadModal()" aria-label="Close note reader">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            style="width: 20px; height: 20px;">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div id="note-reader-content"
+        style="flex: 1; overflow-y: auto; padding: 1.15rem 0.25rem; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); white-space: pre-wrap; word-break: break-word;">
+      </div>
+
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid var(--border-light); flex-shrink: 0; gap: 0.5rem; flex-wrap: wrap;">
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="btn btn-sm btn-primary" id="note-reader-study-btn"
+            onclick="window.gramNotes.studyCurrentNoteWithAI()">
+            🤖 Study with AI Tutor
+          </button>
+          <button class="btn btn-sm btn-secondary" onclick="window.gramNotes.copyCurrentNote()">
+            📋 Copy
+          </button>
+        </div>
+        <button class="btn btn-sm btn-outline" onclick="window.gramNotes.closeReadModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Student Login & Registration Modal -->
+  <div class="modal-overlay" id="student-login-modal">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Student Login & Profile</h3>
+        <button class="modal-close-btn" onclick="window.gramApp.closeStudentLoginModal()" aria-label="Close modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            style="width: 20px; height: 20px;">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Auth Tabs: Login vs Register -->
+      <div class="auth-tabs">
+        <button id="tab-btn-login" class="auth-tab-btn active" onclick="window.gramApp.switchAuthTab('login')">
+          Quick Switch / Login
+        </button>
+        <button id="tab-btn-register" class="auth-tab-btn" onclick="window.gramApp.switchAuthTab('register')">
+          New Student Sign Up
+        </button>
+      </div>
+
+      <!-- Tab 1: Existing Student Login Form with Username & Password -->
+      <div id="auth-login-form">
+        <div class="form-group">
+          <label class="form-label" for="modal-login-username">Username / Student Name:</label>
+          <input type="text" id="modal-login-username" class="input-text" placeholder="e.g. priya or karthik" />
+        </div>
+        <div class="form-group" style="margin-top: 0.75rem;">
+          <label class="form-label" for="modal-login-password">Password:</label>
+          <div class="password-input-wrapper">
+            <input type="password" id="modal-login-password" class="input-text" placeholder="Password (default: 123)"
+              onkeydown="if(event.key==='Enter') window.gramApp.handleModalLogin()" />
+            <button type="button" class="btn-toggle-pass" onclick="window.gramApp.togglePasswordVisibility('modal-login-password', this)">👁️</button>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.65rem; margin-top: 1.5rem;">
+          <button class="btn btn-primary" style="width: 100%;" onclick="window.gramApp.handleModalLogin()">
+            Login
+          </button>
+          <button class="btn btn-outline" style="width: 100%;" onclick="window.gramApp.handleStudentLogout()">
+            Continue as Guest Learner
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab 2: New Student Registration Form -->
+      <div id="auth-register-form" class="hidden">
+        <div class="form-group">
+          <label class="form-label">Choose Student Avatar:</label>
+          <div class="avatar-grid">
+            <button type="button" class="avatar-choice-btn selected" data-avatar="👩‍🎓">👩‍🎓</button>
+            <button type="button" class="avatar-choice-btn" data-avatar="🧑‍🎓">🧑‍🎓</button>
+            <button type="button" class="avatar-choice-btn" data-avatar="🎓">🎓</button>
+            <button type="button" class="avatar-choice-btn" data-avatar="🌟">🌟</button>
+            <button type="button" class="avatar-choice-btn" data-avatar="📚">📚</button>
+            <button type="button" class="avatar-choice-btn" data-avatar="🚀">🚀</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-student-name">Student Name:</label>
+          <input type="text" id="reg-student-name" class="input-text" placeholder="e.g. Priya or Karthik">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-student-grade">Class / Standard:</label>
+          <select id="reg-student-grade" class="select-input">
+            <option value="Class 8">Class 8</option>
+            <option value="Class 9">Class 9</option>
+            <option value="Class 10" selected>Class 10 (SSLC)</option>
+            <option value="Class 11">Class 11</option>
+            <option value="Class 12">Class 12 (HSC)</option>
+            <option value="College">College / Degree</option>
+            <option value="General Learner">General Learner</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-student-lang">Preferred Explanation Language:</label>
+          <select id="reg-student-lang" class="select-input">
+            <option value="Tamil & English" selected>Bilingual Tamil & English (தமிழ் விளக்கம்)</option>
+            <option value="English Only">English Only</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+          <button class="btn btn-outline" style="flex: 1;"
+            onclick="window.gramApp.closeStudentLoginModal()">Cancel</button>
+          <button class="btn btn-primary" style="flex: 2;" onclick="window.gramApp.handleStudentRegister()">Save &
+            Login</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TN State Board Syllabus Explorer Modal (Screen 5 Reference) -->
+  <div class="modal-overlay" id="syllabus-modal">
+    <div class="modal-box" style="max-width: 680px; max-height: 85vh; display: flex; flex-direction: column;">
+      <div class="modal-header" style="flex-shrink: 0;">
+        <div>
+          <h3 class="modal-title" style="font-size: 1.25rem;">TN State Board Syllabus</h3>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">
+            Select your class and subject to view chapters & study with AI.
+          </p>
+        </div>
+        <button class="modal-close-btn" onclick="window.gramApp.closeSyllabusModal()"
+          aria-label="Close syllabus explorer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            style="width: 20px; height: 20px;">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Filters: Class & Subject (Matching Screen 5) -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 1.15rem; flex-shrink: 0;">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="syllabus-class-select">Class / Standard:</label>
+          <select id="syllabus-class-select" class="select-input" onchange="window.gramApp.renderSyllabusUnits()">
+            <option value="6th">6th Standard (Middle School)</option>
+            <option value="7th">7th Standard</option>
+            <option value="8th">8th Standard</option>
+            <option value="9th">9th Standard</option>
+            <option value="10th" selected>10th Standard (SSLC Board)</option>
+            <option value="11th">11th Standard (HSC 1)</option>
+            <option value="12th">12th Standard (HSC 2 Board)</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="syllabus-subject-select">Subject:</label>
+          <select id="syllabus-subject-select" class="select-input" onchange="window.gramApp.renderSyllabusUnits()">
+            <option value="Science" selected>Science (அறிவியல்)</option>
+            <option value="Mathematics">Mathematics (கணிதம்)</option>
+            <option value="Physics">Physics (11th & 12th)</option>
+            <option value="Chemistry">Chemistry (11th & 12th)</option>
+            <option value="English">English Grammar & Prose</option>
+            <option value="Social Science">Social Science (சமூக அறிவியல்)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Units Accordion List (Scrollable) -->
+      <div id="syllabus-units-container" style="flex: 1; overflow-y: auto; padding-right: 0.35rem;">
+        <!-- Dynamically rendered by app.js -->
+      </div>
+
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 0.85rem; border-top: 1px solid var(--border-light); flex-shrink: 0;">
+        <span style="font-size: 0.82rem; color: var(--text-muted);">
+          📚 Covers Tamil Nadu State Board Samacheer Kalvi syllabus (Classes 6 to 12).
+        </span>
+        <button class="btn btn-outline btn-sm" onclick="window.gramApp.closeSyllabusModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clear Student Progress Confirmation Modal -->
+  <div class="modal-overlay" id="clear-progress-modal">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.65rem;">
+          <div
+            style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent-rose-light); color: var(--accent-rose); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+            ⚠️
+          </div>
+          <h3 class="modal-title" style="font-size: 1.2rem; color: var(--text-primary);">Clear Student Progress</h3>
+        </div>
+        <button class="modal-close-btn" onclick="window.gramApp.closeClearProgressModal()" aria-label="Close dialog">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            style="width: 20px; height: 20px;">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div style="padding: 0.5rem 0 1.25rem;">
+        <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1rem;">
+          Are you sure you want to clear all quiz attempts, chapter completions, topic mastery, and activity logs for
+          <strong id="clear-progress-student-name">Active Student</strong>?
+        </p>
+        <div
+          style="background: var(--accent-rose-light); border: 1px solid rgba(190, 18, 60, 0.25); border-radius: var(--radius-md); padding: 0.85rem; font-size: 0.82rem; color: #881337; line-height: 1.45;">
+          <strong>Important Note:</strong>
+          <ul style="margin: 0.35rem 0 0 1.2rem; padding: 0;">
+            <li>This action will reset this student's score history, streak, and learning-gap records to zero.</li>
+            <li>Other students using this device will not be affected.</li>
+            <li>Saved offline study notes are preserved.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+        <button class="btn btn-outline" onclick="window.gramApp.closeClearProgressModal()">Cancel</button>
+        <button class="btn btn-primary" id="btn-confirm-clear-progress"
+          style="background: var(--accent-rose); border-color: var(--accent-rose);"
+          onclick="window.gramApp.handleClearProgress()">
+          Yes, Reset My Progress
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- Local Offline Scripts -->
+  <script src="./vendor/tesseract/tesseract.min.js"></script>
+  <script src="./vendor/pdfjs/pdf.min.js"></script>
+  <script src="./js/db.js?v=24"></script>
+  <script src="./js/data.js?v=24"></script>
+  <script src="./js/tn-syllabus-knowledge.js?v=24"></script>
+  <script src="./js/ai-engine.js?v=24"></script>
+  <script src="./js/chat.js?v=24"></script>
+  <script src="./js/ocr.js?v=24"></script>
+  <script src="./js/quiz.js?v=24"></script>
+  <script src="./js/gaps.js?v=24"></script>
+  <script src="./js/notes.js?v=24"></script>
+  <script src="./js/settings.js?v=24"></script>
+  <script src="./js/app.js?v=24"></script>
+</body>
+
+</html>

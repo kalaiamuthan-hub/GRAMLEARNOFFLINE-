@@ -1,0 +1,24 @@
+{
+  "name": "gramlearn-ai",
+  "version": "1.0.0",
+  "description": "Mobile-first, offline-capable AI tutoring website powered by in-browser quantized models",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "offline-ai",
+    "webllm",
+    "pwa",
+    "qwen",
+    "education",
+    "tutor",
+    "tamil"
+  ],
+  "author": "GramLearn AI",
+  "license": "MIT",
+  "dependencies": {
+    "@mlc-ai/web-llm": "^0.2.78"
+  }
+}
